@@ -56,3 +56,10 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.blogPost {
+  padding: 5px;
+  border-style: solid;
+  border-radius: 1px;
+  margin-bottom: 5px;
+}

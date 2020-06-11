@@ -1,7 +1,7 @@
 import React from 'react'
 import Blog from './Blog'
 
-const BlogPage = ({ name, handleLogout, blogs, createBlog }) => (
+const BlogPage = ({ name, handleLogout, blogs, blogForm }) => (
   <div>
     <h2>Blog page</h2>
 
@@ -13,7 +13,7 @@ const BlogPage = ({ name, handleLogout, blogs, createBlog }) => (
 
     <h3>Create new Blog</h3>
 
-    {createBlog()}
+    {blogForm()}
 
     <h3>blogs</h3>
 
