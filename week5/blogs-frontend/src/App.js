@@ -72,15 +72,13 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <Togglable buttonLabel='login'>
-      <LoginForm
-        username={username}
-        password={password}
-        handleUsernameChange={({ target }) => setUsername(target.value)}
-        handlePasswordChange={({ target }) => setPassword(target.value)}
-        handleSubmit={handleLogin}
-      />
-    </Togglable>
+    <LoginForm
+      username={username}
+      password={password}
+      handleUsernameChange={({ target }) => setUsername(target.value)}
+      handlePasswordChange={({ target }) => setPassword(target.value)}
+      handleSubmit={handleLogin}
+    />
   )
   
   const createBlog = async (blogObject) => {
@@ -102,6 +100,24 @@ const App = () => {
       <BlogForm createBlog={createBlog} />
     </Togglable>
   )
+  
+  const editBlog = () => {
+    alert("like")
+  }
+  
+  const deleteBlog = () => {
+    alert("remove")
+  }
+  
+  const blogPage = () => (
+    <BlogPage name={user.name}
+      handleLogout={handleLogout}
+      blogs={blogs}
+      blogForm={blogForm}
+      editBlog={editBlog}
+      deleteBlog={deleteBlog}
+    />
+  )
 
   return (
     <div>
@@ -109,11 +125,7 @@ const App = () => {
 
       {user === null ?
         loginForm() :
-        <BlogPage name={user.name}
-	  handleLogout={handleLogout}
-	  blogs={blogs}
-	  blogForm={blogForm}
-	/>
+        blogPage()
       }
     </div>
   )

@@ -1,7 +1,14 @@
 import React from 'react'
 import Blog from './Blog'
 
-const BlogPage = ({ name, handleLogout, blogs, blogForm }) => (
+const BlogPage = ({ 
+  name, 
+  handleLogout, 
+  blogs, 
+  blogForm, 
+  editBlog, 
+  deleteBlog 
+ }) => (
   <div>
     <h2>Blog page</h2>
 
@@ -18,7 +25,11 @@ const BlogPage = ({ name, handleLogout, blogs, blogForm }) => (
     <h3>blogs</h3>
 
     {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
+      <Blog key={blog.id}
+        blog={blog}
+        editBlog={editBlog}
+        deleteBlog={deleteBlog}
+      />
     )}
   </div>
 )
