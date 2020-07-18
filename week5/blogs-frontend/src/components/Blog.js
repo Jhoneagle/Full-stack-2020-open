@@ -1,50 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-const Blog = ({ blog, editBlog, deleteBlog }) => (
+const Blog = ({ blog, addlike, deleteBlog }) => {
   const [visible, setVisible] = useState(false)
-  
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+    }
+  }, [])
+
   const toggleVisibility = () => {
     setVisible(!visible)
   }
-  
-  const addlike = () => {
-    alert("like")
-  }
-  
-  const removeBlog = () => {
-    alert("remove")
-  }
-  
-  const limited = () => (
+
+  const limitedBlog = () => (
     <div className="blogPost">
-      <p>
-        {blog.title} {blog.author} 
-        <button onClick={toggleVisibility}>View</button>
-      </p>
-      <p>{blog.url}</p>
-      <p>
-        likes {blog.likes}
-        <button onClick={addlike}>Like</button>
-      </p>
-      <p>{blog.user.name}</p>
-      <p>
-        <button onClick={removeBlog}>Remove</button>
-      </p>
+      {blog.title} {blog.author} <button onClick={toggleVisibility}>View</button>
     </div>
   )
-  
-  const full = () => (
+
+  const fullBlog = () => (
     <div className="blogPost">
-      {blog.title} {blog.author} 
-      <button onClick={toggleVisibility}>Hide</button>
+      <div>
+        {blog.title} {blog.author} <button onClick={toggleVisibility}>Hide</button>
+      </div>
+      <div>{blog.url}</div>
+      <div>
+        likes {blog.likes} <button onClick={() => addlike(blog)}>Like</button>
+      </div>
+      <div>{blog.user.name}</div>
+      {blog.user.id !== user.id ?
+        <div>
+          <button onClick={() => deleteBlog(blog)}>Remove</button>
+        </div> :
+        <div></div>
+      }
     </div>
   )
-  
+
   return (
-    {visible ? 
-      limited() :
-      full()}
+    <div>
+      {!visible ?
+        limitedBlog() :
+        fullBlog()
+      }
+    </div>
   )
-)
+}
 
 export default Blog

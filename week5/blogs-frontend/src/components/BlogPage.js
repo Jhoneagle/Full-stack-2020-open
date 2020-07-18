@@ -1,37 +1,43 @@
 import React from 'react'
 import Blog from './Blog'
 
-const BlogPage = ({ 
-  name, 
-  handleLogout, 
-  blogs, 
-  blogForm, 
-  editBlog, 
-  deleteBlog 
- }) => (
-  <div>
-    <h2>Blog page</h2>
+const BlogPage = ({
+  name,
+  handleLogout,
+  blogs,
+  blogForm,
+  addlike,
+  deleteBlog
+}) => {
+  const invidualBlog = (blog) => (
+    <Blog key={blog.id}
+      blog={blog}
+      addlike={addlike}
+      deleteBlog={deleteBlog}
+    />
+  )
 
-    <form onSubmit={handleLogout}>
-      {name} logged in <button type="submit">logout</button>
-    </form>
+  return (
+    <div>
+      <h2>Blog page</h2>
 
-    <br />
+      <form onSubmit={handleLogout}>
+        {name} logged in <button type="submit">logout</button>
+      </form>
 
-    <h3>Create new Blog</h3>
+      <br />
 
-    {blogForm()}
+      <h3>Create new Blog</h3>
 
-    <h3>blogs</h3>
+      {blogForm()}
 
-    {blogs.map(blog =>
-      <Blog key={blog.id}
-        blog={blog}
-        editBlog={editBlog}
-        deleteBlog={deleteBlog}
-      />
-    )}
-  </div>
-)
+      <h3>blogs</h3>
+
+      {blogs.map(blog =>
+        invidualBlog(blog)
+      )}
+    </div>
+  )
+}
 
 export default BlogPage
