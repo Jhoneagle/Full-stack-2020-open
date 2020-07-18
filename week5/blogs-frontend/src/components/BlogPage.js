@@ -1,5 +1,6 @@
 import React from 'react'
 import Blog from './Blog'
+import PropTypes from 'prop-types'
 
 const BlogPage = ({
   name,
@@ -38,6 +39,15 @@ const BlogPage = ({
       )}
     </div>
   )
+}
+
+BlogPage.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+  blogs: PropTypes.array.isRequired,
+  blogForm: PropTypes.func.isRequired,
+  addlike: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired
 }
 
 export default BlogPage
