@@ -1,0 +1,1 @@
+This is a blog application back end. The code will admittedly be based on the model solution of the course, as back end is implemented in earlier parts of the course that I have skipped. Due to their similarity in relation to the earlier version of the course.
