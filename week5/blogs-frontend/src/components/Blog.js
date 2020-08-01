@@ -24,6 +24,8 @@ const Blog = ({ blog, addlike, deleteBlog }) => {
     </div>
   )
 
+  const canDelete = user !== null && blog.user.username === user.username
+
   const fullBlog = () => (
     <div className="blogPost">
       <div>
@@ -34,11 +36,10 @@ const Blog = ({ blog, addlike, deleteBlog }) => {
         likes {blog.likes} <button onClick={() => addlike(blog)}>Like</button>
       </div>
       <div>{blog.user.name}</div>
-      {blog.user.id !== user.id ?
+      {canDelete &&
         <div>
           <button onClick={() => deleteBlog(blog)}>Remove</button>
-        </div> :
-        <div></div>
+        </div>
       }
     </div>
   )

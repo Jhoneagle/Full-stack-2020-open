@@ -54,6 +54,8 @@ const App = () => {
         username, password,
       })
 
+      console.log('login', user)
+
       window.localStorage.setItem(
         'loggedInUser', JSON.stringify(user)
       )
