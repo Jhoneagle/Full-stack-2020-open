@@ -23,7 +23,7 @@ const BlogPage = ({
       <h2>Blog page</h2>
 
       <form onSubmit={handleLogout}>
-        {name} logged in <button type="submit">logout</button>
+        {name} logged in <button id="logout-button" type="submit">logout</button>
       </form>
 
       <br />

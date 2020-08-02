@@ -20,7 +20,7 @@ const Blog = ({ blog, addlike, deleteBlog }) => {
 
   const limitedBlog = () => (
     <div className="blogPost">
-      {blog.title} {blog.author} <button onClick={toggleVisibility}>View</button>
+      {blog.title} by {blog.author} <button id="view-button" onClick={toggleVisibility}>View</button>
     </div>
   )
 
@@ -29,16 +29,16 @@ const Blog = ({ blog, addlike, deleteBlog }) => {
   const fullBlog = () => (
     <div className="blogPost">
       <div>
-        {blog.title} {blog.author} <button onClick={toggleVisibility}>Hide</button>
+        {blog.title} by {blog.author} <button id="hide-button" onClick={toggleVisibility}>Hide</button>
       </div>
       <div>{blog.url}</div>
       <div>
-        likes {blog.likes} <button onClick={() => addlike(blog)}>Like</button>
+        likes {blog.likes} <button id="like-button" onClick={() => addlike(blog)}>Like</button>
       </div>
       <div>{blog.user.name}</div>
       {canDelete &&
         <div>
-          <button onClick={() => deleteBlog(blog)}>Remove</button>
+          <button id="delete-button" onClick={() => deleteBlog(blog)}>Remove</button>
         </div>
       }
     </div>
