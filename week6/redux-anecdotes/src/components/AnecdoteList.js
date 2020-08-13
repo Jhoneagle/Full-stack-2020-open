@@ -23,13 +23,13 @@ const AnecdoteList = (props) => {
   )
 }
 
-const anecdotesToShow = ({ anecdotes, filter }) => { 
+const anecdotesToShow = ({ anecdotes, filter }) => {
   return anecdotes.filter(anecdote => anecdote.content.includes(filter))
 }
 
 const mapStateToProps = (state) => {
   return {
-    visibleAnecdotes: anecdotesToShow(state), 
+    visibleAnecdotes: anecdotesToShow(state),
   }
 }
 

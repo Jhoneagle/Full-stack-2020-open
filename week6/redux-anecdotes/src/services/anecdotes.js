@@ -9,15 +9,15 @@ const getAll = async () => {
 
 const createNew = async (content) => {
   const object = { content, votes: 0 }
-  
+
   const response = await axios.post(baseUrl, object)
   return response.data
 }
 
 const vote = async (anecdote) => {
-  anecdote = {...anecdote, votes: anecdote.votes + 1}
+  anecdote = { ...anecdote, votes: anecdote.votes + 1 }
   const url = `${baseUrl}/${anecdote.id}`
-  
+
   const response = await axios.put(url, anecdote)
   return response.data
 }

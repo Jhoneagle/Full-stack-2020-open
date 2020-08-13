@@ -4,24 +4,25 @@ const compareAnecdotes = (anecdote1, anecdote2) => {
   if (anecdote2.votes !== anecdote1.votes) {
     return anecdote2.votes - anecdote1.votes
   }
-  
+
   return anecdote1.content.localeCompare(anecdote2.content)
 }
 
 const anecdoteReducer = (state = [], action) => {
   switch (action.type) {
-    case 'NEW_ANECDOTE':
-      return state.concat(action.data).sort(compareAnecdotes)
-    case 'INIT_ANECDOTES':
-      return action.data.sort(compareAnecdotes)
-    case 'VOTE':
-      const changedAnecdote = action.data
-      const updateList = state.map(anecdote =>
-        anecdote.id !== changedAnecdote.id ? anecdote : changedAnecdote 
-      )
-      
-      return updateList.sort(compareAnecdotes)
-    default: return state.sort(compareAnecdotes)
+  case 'NEW_ANECDOTE':
+    return state.concat(action.data).sort(compareAnecdotes)
+  case 'INIT_ANECDOTES':
+    return action.data.sort(compareAnecdotes)
+  case 'VOTE':
+    const changedAnecdote = action.data
+    const updateList = state.map(anecdote =>
+      anecdote.id !== changedAnecdote.id ? anecdote : changedAnecdote
+    )
+
+    return updateList.sort(compareAnecdotes)
+  default:
+    return state.sort(compareAnecdotes)
   }
 }
 

@@ -6,7 +6,7 @@ const Filter = (props) => {
   const handleChange = (event) => {
     props.setFilter(event.target.value)
   }
-  
+
   const style = {
     marginBottom: 10
   }
