@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Anecdote = ({ anecdote, handleClick }) => {
+const Anecdote = ({ anecdote, vote }) => {
   return(
     <div key={anecdote.id}>
       <div>
@@ -8,7 +8,7 @@ const Anecdote = ({ anecdote, handleClick }) => {
       </div>
       <div>
         has {anecdote.votes}
-        <button onClick={handleClick}>vote</button>
+        <button onClick={() => vote(anecdote)}>vote</button>
       </div>
     </div>
   )
