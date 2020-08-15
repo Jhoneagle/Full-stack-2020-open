@@ -29,7 +29,7 @@ const anecdotesToShow = ({ anecdotes, filter }) => {
 
 const mapStateToProps = (state) => {
   return {
-    visibleAnecdotes: anecdotesToShow(state),
+    visibleAnecdotes: anecdotesToShow(state)
   }
 }
 
