@@ -1,0 +1,51 @@
+{
+  "notes": [
+    {
+      "content": "custom-hookit aivan mahtavia",
+      "id": 1
+    },
+    {
+      "content": "paras feature ikinä <3",
+      "id": 2
+    },
+    {
+      "content": "moi vaan",
+      "id": 3
+    },
+    {
+      "content": "tän pitäisi siis toimia",
+      "id": 4
+    },
+    {
+      "content": "hassusti jää kentätä päälle",
+      "id": 5
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "johneagle",
+      "number": "1",
+      "id": 2
+    },
+    {
+      "name": "Miina",
+      "number": "2",
+      "id": 3
+    },
+    {
+      "name": "Meri",
+      "number": "3",
+      "id": 4
+    },
+    {
+      "name": "Joni",
+      "number": "4",
+      "id": 5
+    }
+  ]
+}
