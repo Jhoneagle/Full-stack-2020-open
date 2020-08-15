@@ -5,7 +5,7 @@ import { notify } from './../reducers/notificationReducer'
 import Anecdote from './Anecdote'
 
 const AnecdoteList = (props) => {
-  const vote = (anecdote) => {
+  const onVote = (anecdote) => {
     props.voteAnecdote(anecdote)
     props.notify(`voted anecdote ${anecdote.content} successfully`, 5)
   }
@@ -16,7 +16,7 @@ const AnecdoteList = (props) => {
         <Anecdote
           key={anecdote.id}
           anecdote={anecdote}
-          vote={vote}
+          voteHandler={onVote}
         />
       )}
     </div>
