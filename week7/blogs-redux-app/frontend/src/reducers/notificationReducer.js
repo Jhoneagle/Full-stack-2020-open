@@ -12,9 +12,9 @@ const notificationReducer = (state = initialState, action) => {
   }
 }
 
-export const notify = (notification, seconds) => {
+export const notify = (message, seconds, type='success') => {
   return async dispatch => {
-    dispatch(createNotification(notification))
+    dispatch(createNotification({ message, type }))
 
     if (timeoutID !== null) {
       clearTimeout(timeoutID)
