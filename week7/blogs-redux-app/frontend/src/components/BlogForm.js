@@ -3,7 +3,7 @@ import { createBlog } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import  { useField } from './../hooks'
+import { useField } from './../hooks'
 
 const BlogForm = (props) => {
   const { value:title, bind:bindTitle, reset:resetTitle } = useField('text')
@@ -24,7 +24,6 @@ const BlogForm = (props) => {
       history.push('/blogs')
     } catch (exception) {
       props.notify('Invalid Information! Please fill out the form correctly.', 5, 'error')
-      console.log(exception)
     }
   }
 

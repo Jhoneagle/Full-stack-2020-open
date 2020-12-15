@@ -47,6 +47,18 @@ export const createBlog = (data) => {
   }
 }
 
+export const createComment = (blog, comment) => {
+  return async (dispatch) => {
+    const newComment = await blogService.addComment(blog, comment)
+    blog.comments = blog.comments.concat(newComment)
+
+    dispatch({
+      type: 'UPDATE_BLOG',
+      data: blog
+    })
+  }
+}
+
 export const increaseLikes = (blog) => {
   return async (dispatch) => {
     const likedBlog = {
