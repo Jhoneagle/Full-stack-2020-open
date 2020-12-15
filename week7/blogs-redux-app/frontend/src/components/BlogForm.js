@@ -4,6 +4,7 @@ import { notify } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useField } from './../hooks'
+import { Form, Button } from 'react-bootstrap'
 
 const BlogForm = (props) => {
   const { value:title, bind:bindTitle, reset:resetTitle } = useField('text')
@@ -23,7 +24,7 @@ const BlogForm = (props) => {
 
       history.push('/blogs')
     } catch (exception) {
-      props.notify('Invalid Information! Please fill out the form correctly.', 5, 'error')
+      props.notify('Invalid Information! Please fill out the form correctly.', 5, 'danger')
     }
   }
 
@@ -37,22 +38,22 @@ const BlogForm = (props) => {
   return (
     <div>
       <h3>Create new blog</h3>
-      <form>
-        <div>
-          title:
-          <input  {...bindTitle} />
-        </div>
-        <div>
-          author:
-          <input  {...bindAuthor} />
-        </div>
-        <div>
-          url:
-          <input  {...bindUrl} />
-        </div>
-        <button onClick={handleSubmit}>create</button>
-        <button onClick={handleReset}>reset</button>
-      </form>
+      <Form>
+        <Form.Group>
+          <Form.Label>title:</Form.Label>
+          <Form.Control {...bindTitle} />
+          <Form.Label>author:</Form.Label>
+          <Form.Control {...bindAuthor} />
+          <Form.Label>url:</Form.Label>
+          <Form.Control {...bindUrl} />
+	  <Button variant="success" type="submit" onClick={handleSubmit}>
+	    create
+	  </Button>
+          <Button variant="warning" type="submit" onClick={handleReset}>
+	    reset
+	  </Button>
+        </Form.Group>
+      </Form>
     </div>
   )
 }

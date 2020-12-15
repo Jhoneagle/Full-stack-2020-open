@@ -6,7 +6,6 @@ import UserList from './UserList'
 import User from './User'
 import LoginForm from './LoginForm'
 import BlogForm from './BlogForm'
-import About from './About'
 import Menu from './Menu'
 import Footer from './Footer'
 import Togglable from './Togglable'
@@ -26,7 +25,7 @@ const BlogApp = (props) => {
     : null
 
   return (
-    <div>
+    <div className="container">
       <Notification />
 
       <h1>Bloglist</h1>
@@ -46,9 +45,6 @@ const BlogApp = (props) => {
           <Redirect from='/' to='/login' />
         </Switch>
         : <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
 	  <Route path="/createBlog">
             <BlogForm />
           </Route>

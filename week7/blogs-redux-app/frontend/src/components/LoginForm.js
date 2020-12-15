@@ -4,6 +4,7 @@ import { login } from '../reducers/loginReducer'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import  { useField } from './../hooks'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = (props) => {
   const { value:username, bind:bindUsername, reset:resetUsername } = useField('text')
@@ -26,25 +27,27 @@ const LoginForm = (props) => {
 
       history.push('/')
     } catch (exception) {
-      props.notify('Wrong credentials!', 5, 'error')
+      props.notify('Wrong credentials!', 5, 'danger')
     }
   }
 
   return (
-    <div className='loginForm'>
+    <div>
       <h3>Log in to application</h3>
-      <form>
-        <div>
-          username:
-          <input  {...bindUsername} />
-        </div>
-        <div>
-          password:
-          <input  {...bindPassword} />
-        </div>
-        <button onClick={handleSubmit}>login</button>
-        <button onClick={handleReset}>reset</button>
-      </form>
+      <Form>
+        <Form.Group>
+          <Form.Label>username:</Form.Label>
+          <Form.Control {...bindUsername} />
+          <Form.Label>password:</Form.Label>
+          <Form.Control {...bindPassword} />
+	  <Button variant="success" type="submit" onClick={handleSubmit}>
+	    login
+	  </Button>
+          <Button variant="warning" type="submit" onClick={handleReset}>
+	    reset
+	  </Button>
+        </Form.Group>
+      </Form>
     </div>
   )
 }
