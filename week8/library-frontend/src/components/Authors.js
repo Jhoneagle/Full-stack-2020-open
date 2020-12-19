@@ -1,74 +1,61 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation } from '@apollo/client'
-import { EDIT_AUTHOR } from '../queries'
+import { useQuery, useSubscription } from '@apollo/client'
+import { Row, Col, Spinner } from 'react-bootstrap'
 
-const Authors = (props) => {
-  const [name, setName] = useState('')
-  const [born, setBorn] = useState('')
+import { ALL_AUTHORS, BOOK_ADDED } from '../graphql/queries'
 
-  const [changeAuthor, result] = useMutation(EDIT_AUTHOR)
+import AuthorsTable from './AuthorsTable'
+import AuthorsForm from './AuthorsForm'
+import NoResource from './NoResource'
+
+const Authors = () => {
+  const [authors, setAuthors] = useState([])
+  const [hasNoAuthors, setHasNoAuthors] = useState(false)
+  const getAllAuthors = useQuery(ALL_AUTHORS)
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: () => {
+      getAllAuthors.refetch()
+    },
+  })
 
   useEffect(() => {
-    if ( result.data && !result.data.changeAuthor) {
-      props.notify('name not found')
+    const { called, networkStatus, data } = getAllAuthors
+
+    if (called && networkStatus > 6) {
+      const newAuthors = data ? data.allAuthors : authors
+
+      setHasNoAuthors(newAuthors.length === 0)
+      setAuthors(newAuthors)
     }
-  }, [result.data]) // eslint-disable-line
-
-  const submit = async (event) => {
-    event.preventDefault()
-
-    changeAuthor({ variables: { name, born } })
-
-    setName('')
-    setBorn('')
-  }
-
-  if (!props.show) {
-    return null
-  }
+  }, [authors, getAllAuthors])
 
   return (
-    <div>
-      <h2>authors</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th></th>
-            <th>
-              born
-            </th>
-            <th>
-              books
-            </th>
-          </tr>
-          {props.authors.map(a =>
-            <tr key={a.name}>
-              <td>{a.name}</td>
-              <td>{a.born}</td>
-              <td>{a.bookCount}</td>
-            </tr>
+    <>
+      <Row className='my-4'>
+        <Col>
+          <h1 className='d-inline h2 mr-2'>Authors</h1>
+
+          {getAllAuthors.loading && (
+            <Spinner variant='info' animation='grow' role='status' size='sm'>
+              <span className='sr-only'>Loading...</span>
+            </Spinner>
           )}
-        </tbody>
-      </table>
 
-      <h2>Set birthyear</h2>
+          <hr />
 
-      <form onSubmit={submit}>
-        <div>
-          name <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div>
-        <div>
-          born <input
-            value={born}
-            onChange={({ target }) => setBorn(target.value)}
-          />
-        </div>
-        <button type='submit'>change number</button>
-      </form>
-    </div>
+          <AuthorsForm authors={authors} />
+
+          {hasNoAuthors && <NoResource resource='authors' />}
+
+          {authors.length > 0 && (
+            <>
+              <AuthorsTable authors={authors} />
+            </>
+          )}
+        </Col>
+      </Row>
+    </>
   )
 }
 

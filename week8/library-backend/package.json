@@ -1,0 +1,26 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "simple library backend with graphQL",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "eslint": "eslint ."
+  },
+  "author": "Johneagle",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.19.0",
+    "dataloader": "^2.0.0",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash.countby": "^4.6.0",
+    "mongoose": "^5.11.8",
+    "mongoose-unique-validator": "^2.0.3",
+    "nodemon": "^2.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.15.0"
+  }
+}
