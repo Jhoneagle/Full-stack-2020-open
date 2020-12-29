@@ -4,7 +4,7 @@ export const resolveApolloErrors = ({ graphQLErrors, networkError }) => {
   let errors
 
   if (networkError) {
-    logger.error(`[Network error]: ${networkError}`)
+    logger.error(`${networkError}`)
 
     errors = ['Something went wrong...']
   } else if (graphQLErrors) {
@@ -12,19 +12,14 @@ export const resolveApolloErrors = ({ graphQLErrors, networkError }) => {
       const { message, locations, path, extensions } = error
 
       logger.error(
-        `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
+        `Message: ${message}, Location: ${JSON.stringify(
           locations
         )}, Path: ${path}`
       )
 
-      const { code, errorMessages } = extensions
-
-      switch (code) {
+      switch (extensions.code) {
       case 'BAD_USER_INPUT':
-        return result.concat(errorMessages)
-      case 'NOT_FOUND':
-        result.push(message)
-        return result
+        return result.concat(extensions.exception.errorMessages)
       default:
         result.push(message)
         return result

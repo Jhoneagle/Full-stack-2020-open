@@ -1,7 +1,7 @@
 ﻿const DataLoader = require('dataloader')
 const _countBy = require('lodash.countby')
-const Book = require('../models/Book')
-const Author = require('./models/authors')
+const Book = require('../models/book')
+const Author = require('../models/author')
 
 const createBookCountLoader = () => {
   return new DataLoader(async (authorIds) => {
@@ -13,15 +13,4 @@ const createBookCountLoader = () => {
   })
 }
 
-const createAuthorLoader = () => {
-  return new DataLoader(async (keys) => {
-    const authors = await Author.find({ _id: { $in: keys } })
-
-    return keys.map((key) =>
-      authors.find((author) => author.id === key) ||
-      new Error(`No result for ${key}`)
-    )
-  })
-}
-
-module.exports = { createBookCountLoader, createAuthorLoader }
+module.exports = { createBookCountLoader }

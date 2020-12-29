@@ -41,8 +41,8 @@ const RecommendedBooks = () => {
     )
   }
 
-  const booksToShow = books.filter((b) => {
-    b.genres.includes(user.favoriteGenre)
+  let booksToShow = books.filter((b) => {
+    return b.genres.includes(user.favoriteGenre)
   })
 
   return (

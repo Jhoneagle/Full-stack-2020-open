@@ -4,19 +4,21 @@ import { Toast } from 'react-bootstrap'
 
 import useNotification from '../hooks/useNotification'
 
-const severityStyles = Object.keys({
-  success: { bg: 'bg-success', txt: 'text-light' },
-  error: { bg: 'bg-danger', txt: 'text-light' },
-  warning: { bg: 'bg-warning', txt: 'text-light' },
-  info: { bg: 'bg-info', txt: 'text-light' },
-})
+const severityStyles = {
+  'success': { bg: 'bg-success', txt: 'text-light' },
+  'error': { bg: 'bg-danger', txt: 'text-light' },
+  'warning': { bg: 'bg-warning', txt: 'text-light' },
+  'info': { bg: 'bg-info', txt: 'text-light' },
+}
+
+const classNameKeys = Object.keys(severityStyles)
 
 const Notification = ({ id, message, timeout, level }) => {
   const [show, setShow] = useState(true)
 
   const notificationHelper = useNotification()
 
-  const type = severityStyles.includes(level)
+  const type = classNameKeys.includes(level)
     ? severityStyles[level]
     : { bg: null, txt: null }
 

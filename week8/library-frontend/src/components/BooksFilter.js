@@ -25,7 +25,7 @@ const BooksFilter = (props) => {
     return options
   }, [genres, hasGenres])
 
-  const filterByGenre = useCallback((option, action) => {
+  const filterByGenre = useCallback((option) => {
     const genre = option.label === 'all' ? null : option.label
 
     props.setGenre(genre)

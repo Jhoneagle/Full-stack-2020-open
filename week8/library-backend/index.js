@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const User = require('./models/user')
 const { typeDefs } = require('./graphql/typeDefs')
 const { resolvers } = require('./graphql/resolvers')
-const { createBookCountLoader, createAuthorLoader } = require('./graphql/loaders')
+const { createBookCountLoader } = require('./graphql/loaders')
 
 const url =  config.MONGODB_URI
 
@@ -30,7 +30,6 @@ const server = new ApolloServer({
   context: async ({ req }) => {
     const loaders = {
       bookCountLoader: createBookCountLoader(),
-      authorLoader: createAuthorLoader(),
     }
 
     const auth = req ? req.headers.authorization : null

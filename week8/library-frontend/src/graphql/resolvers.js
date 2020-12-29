@@ -3,9 +3,9 @@ import { ALL_NOTIFICATIONS } from './queries'
 
 export const resolvers = {
   Query: {
-    allNotificaions: (root, args, { cache }) => {
-      const { allNotificaions } = cache.readQuery({ query: ALL_NOTIFICATIONS })
-      return allNotificaions
+    allNotifications: (root, args, { cache }) => {
+      const { allNotifications } = cache.readQuery({ query: ALL_NOTIFICATIONS })
+      return allNotifications
     },
   },
   Mutation: {
@@ -37,7 +37,7 @@ export const resolvers = {
 
       if (notificationToRemove) {
         const newData = {
-          allNotifications: allNotifications.filter((n) => n.id !== args.id),
+          allNotifications: allNotifications.filter((n) => n.id !== args.id)
         }
 
         cache.writeQuery({ query: ALL_NOTIFICATIONS, data: newData })

@@ -60,10 +60,9 @@ const LoginForm = () => {
       if (gqlData) {
         history.push(redirectPath)
 
-        notificationHelper.add('Successfully logged in', 'success')
+        notificationHelper.add('Successfully logged in', 'success', 5000)
       }
-    },
-    [login, notificationHelper, reset, redirectPath, history]
+    }, [login, notificationHelper, reset, redirectPath, history]
   )
 
   return (

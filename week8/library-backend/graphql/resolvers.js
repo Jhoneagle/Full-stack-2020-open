@@ -1,5 +1,6 @@
-﻿const Book = require('../models/books')
-const Author = require('../models/authors')
+﻿const config = require('../utils/config')
+const Book = require('../models/book')
+const Author = require('../models/author')
 const User = require('../models/user')
 const {
   UserInputError,
@@ -15,7 +16,6 @@ const {
 const jwt = require('jsonwebtoken')
 
 const pubsub = new PubSub()
-const JWT_SECRET = process.env.SECRET
 
 const resolvers = {
   Query: {
@@ -30,19 +30,15 @@ const resolvers = {
             { author: { $in: author.id } },
             { genres: { $in: args.genre } },
           ],
-        })
+        }).populate('author')
 
-        return books.populate('author')
+        return books
       } else if (args.author) {
         const author = await Author.findOne({ name: args.author })
 
-        const books = await Book.find({ author: { $in: author.id } })
-
-        return books.populate('author')
+        return Book.find({ author: { $in: author.id } }).populate('author')
       } else if (args.genre) {
-        const books = await Book.find({ genres: { $in: args.genre } })
-
-        return books.populate('author')
+        return Book.find({ genres: { $in: args.genre } }).populate('author')
       } else {
         return Book.find({}).populate('author')
       }
@@ -58,11 +54,6 @@ const resolvers = {
     bookCount: ({ id }, args, { bookCountLoader }) => {
       return bookCountLoader.load(id.toString())
     }
-  },
-  Book: {
-    author: async ({ author }, args, { authorLoader }) => {
-      return await authorLoader.load(author._id)
-    },
   },
   Mutation: {
     addBook: async (root, args, context) => {
@@ -102,7 +93,7 @@ const resolvers = {
         if (e.name === 'ValidationError') {
           const validationErrors = getModelValidationErrors(e, 'Book')
 
-          throw new UserInputError('Couldn&quot;t create new book', {
+          throw new UserInputError('Could not create a new book', {
             invalidArgs: args,
             errorMessages: validationErrors,
           })
@@ -111,9 +102,11 @@ const resolvers = {
         useFallbackErrorHandler(e)
       }
 
-      pubsub.publish('BOOK_ADDED', { bookAdded: book })
+      const populatedBook = await book.populate("author").execPopulate()
 
-      return book
+      pubsub.publish("BOOK_ADDED", { bookAdded: populatedBook })
+
+      return populatedBook
     },
     editAuthor: async (root, args, context) => {
       const author = await Author.findOne({ name: args.name })
@@ -162,7 +155,7 @@ const resolvers = {
         id: user._id,
       }
 
-      return { value: jwt.sign(userForToken, JWT_SECRET) }
+      return { value: jwt.sign(userForToken, config.JWT_SECRET) }
     },
   },
   Subscription: {

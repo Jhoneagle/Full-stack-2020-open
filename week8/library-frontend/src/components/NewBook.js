@@ -1,12 +1,12 @@
 import React, { useRef, useState, useCallback } from 'react'
 import { useMutation, useSubscription } from '@apollo/client'
 import { Redirect, useLocation } from 'react-router-dom'
-import { useUIDSeed } from 'react-uid'
+import { useUIDSeed, uid } from 'react-uid'
 import { useForm } from 'react-hook-form'
 import { Row, Col, Form, InputGroup, Button, Spinner } from 'react-bootstrap'
 
 import { CREATE_BOOK, ALL_BOOKS, ALL_AUTHORS, BOOK_ADDED } from '../graphql/queries'
-import { resolveApolloErrors } from '../helpers/errorHelper'
+import { resolveApolloErrors } from '../utils/errorHelper'
 import useAuthUser from '../hooks/useAuthUser'
 import useNotification from '../hooks/useNotification'
 
@@ -57,7 +57,10 @@ const NewBook = () => {
     const { genre } = getValues()
 
     if (genre) {
-      setGenres(genres.concat(genre))
+      setGenres((prevGenres) =>
+        prevGenres.concat({ id: uid({}), value: genre })
+      )
+
       setValue('genre', '')
     }
   }, [setValue, getValues])
@@ -65,11 +68,17 @@ const NewBook = () => {
   const addBook = useCallback(
     async (values) => {
       const { title, author, published } = values
+      const genreValues = genres.map((g) => g.value)
 
       isAddingBook.current = true
 
       const gqlData = await createBook({
-        variables: { title, author, published, genres },
+        variables: {
+          title,
+          author,
+          published: Number(published),
+          genres: genreValues
+        }
       })
 
       if (gqlData) {
@@ -186,9 +195,7 @@ const NewBook = () => {
           <Col sm={10} md={6}>
             <InputGroup>
               <Form.Control
-                ref={register({
-                  required: 'Please enter genre',
-                })}
+                ref={register}
                 type='text'
                 name='genre'
                 placeholder='Book Genre'

@@ -35,7 +35,7 @@ export const ALL_AUTHORS = gql`
 export const ALL_BOOKS = gql`
   query fetchBooks($author: String, $genre: String) {
     allBooks(author: $author, genre: $genre) {
-      ...bookDetails
+      ...BookDetails
     }
   }
   ${BOOK_DETAILS}
@@ -46,7 +46,7 @@ export const CREATE_BOOK = gql`
     $title: String!
     $author: String!
     $published: Int!
-    $genres: [String]!
+    $genres: [String!]!
   ) {
     addBook(
       title: $title
