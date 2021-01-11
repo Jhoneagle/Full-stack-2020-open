@@ -12,10 +12,8 @@ const useAuthUser = () => {
   const getAuthUser = useQuery(ME)
 
   useEffect(() => {
-    const { called, networkStatus, data } = getAuthUser
-
-    if (called && networkStatus > 6) {
-      const authUser = data ? data.me : null
+    if (!getAuthUser.loading) {
+      const authUser = getAuthUser.data ? getAuthUser.data.me : null
 
       setAuthStatus({ user: authUser, hasSyncAuth: true })
     }

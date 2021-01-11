@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useSubscription } from '@apollo/client'
-import { Row, Col, Spinner } from 'react-bootstrap'
+import { Row, Col, Spinner, Jumbotron } from 'react-bootstrap'
 
 import { ALL_AUTHORS, BOOK_ADDED } from '../graphql/queries'
 
 import AuthorsTable from './AuthorsTable'
 import AuthorsForm from './AuthorsForm'
-import NoResource from './NoResource'
 
 const Authors = () => {
   const [authors, setAuthors] = useState([])
@@ -20,10 +19,8 @@ const Authors = () => {
   })
 
   useEffect(() => {
-    const { called, networkStatus, data } = getAllAuthors
-
-    if (called && networkStatus > 6) {
-      const newAuthors = data ? data.allAuthors : authors
+    if (!getAllAuthors.loading) {
+      const newAuthors = getAllAuthors.data ? getAllAuthors.data.allAuthors : authors
 
       setHasNoAuthors(newAuthors.length === 0)
       setAuthors(newAuthors)
@@ -46,7 +43,11 @@ const Authors = () => {
 
           <AuthorsForm authors={authors} />
 
-          {hasNoAuthors && <NoResource resource='authors' />}
+          {hasNoAuthors &&
+            <Jumbotron>
+              <p className='lead'>There are currently no authors to display.</p>
+            </Jumbotron>
+          }
 
           {authors.length > 0 && (
             <>

@@ -22,7 +22,7 @@ const AuthorsForm = ({ authors }) => {
     refetchQueries: [{ query: ALL_AUTHORS }],
     onError: (error) => {
       const errorsToDisplay = resolveApolloErrors(error)
-      notificationHelper.addMultiple(errorsToDisplay, 'error', 5000)
+      notificationHelper.addMultiple(errorsToDisplay, 'error')
     },
   })
 
@@ -46,7 +46,7 @@ const AuthorsForm = ({ authors }) => {
       const gqlData = await editAuthor({ variables })
 
       if (gqlData) {
-        notificationHelper.add('Author edited succesfully', 'info')
+        notificationHelper.add('Author edited succesfully!', 'info')
       }
 
       reset()
@@ -92,12 +92,13 @@ const AuthorsForm = ({ authors }) => {
             aria-labelledby={uidSeed('author')}
             placeholder='Select an Author'
           />
+
           <div className='d-flex flex-column'>
             <small id={uidSeed('author')} className='sr-only'>
               Select an author to update from the dropdown.
             </small>
             <small className='text-danger mt-1'>
-              {errors.author && 'Please select an author'}
+              {errors.author && 'Please select an author!'}
             </small>
           </div>
         </Col>

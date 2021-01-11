@@ -1,7 +1,6 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Jumbotron } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import NoResource from './NoResource'
 
 import useAuthUser from '../hooks/useAuthUser'
 
@@ -14,10 +13,12 @@ const NoBooks = () => {
 
   return (
     <>
-      <NoResource resource='books' />
+      <Jumbotron>
+        <p className='lead'>There are currently no books to display.</p>
+      </Jumbotron>
       <p>
         {user && (
-          <Button variant='primary' as={Link} to='/new'>
+          <Button variant='primary' as={Link} to='/newBook'>
             Add a new Book
           </Button>
         )}
@@ -27,7 +28,7 @@ const NoBooks = () => {
             as={Link}
             to={{
               pathname: '/login',
-              state: { from: '/new' },
+              state: { from: '/newBook' },
             }}
           >
             Login to add a new Book

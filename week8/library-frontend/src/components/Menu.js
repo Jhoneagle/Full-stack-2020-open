@@ -45,9 +45,9 @@ const Menu = () => {
             {user && (
               <>
                 <Nav.Link
-                  to='/new'
+                  to='/newBook'
                   as={Link}
-                  active={pathname === '/new'}
+                  active={pathname === '/newBook'}
                   className='mr-2'
                 >
                   Add Book

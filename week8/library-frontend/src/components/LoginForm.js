@@ -23,15 +23,13 @@ const LoginForm = () => {
 
   const [login] = useMutation(LOGIN, {
     refetchQueries: ({ data: { login } }) => {
-      const token = login.value
-
-      localStorage.setItem('gqlLibrary-user-token', token)
+      localStorage.setItem('gqlLibrary-user-token', login.value)
 
       return [{ query: ME }]
     },
     onError: (error) => {
       const errorsToDisplay = resolveApolloErrors(error)
-      notificationHelper.addMultiple(errorsToDisplay, 'error', 5000)
+      notificationHelper.addMultiple(errorsToDisplay, 'error')
     },
     awaitRefetchQueries: true,
   })
@@ -60,9 +58,10 @@ const LoginForm = () => {
       if (gqlData) {
         history.push(redirectPath)
 
-        notificationHelper.add('Successfully logged in', 'success', 5000)
+        notificationHelper.add('Successfully logged in!', 'success')
       }
-    }, [login, notificationHelper, reset, redirectPath, history]
+    },
+    [login, notificationHelper, reset, redirectPath, history]
   )
 
   return (
@@ -88,7 +87,7 @@ const LoginForm = () => {
       <Form.Group as={Row} controlId={uidSeed('password')}>
         <Col>
           <Form.Control
-            type='text'
+            type='password'
             ref={register({
               required: 'Please enter password',
             })}

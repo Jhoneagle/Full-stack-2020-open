@@ -58,7 +58,6 @@ const resolvers = {
   Mutation: {
     addBook: async (root, args, context) => {
       let author = await Author.findOne({ name: args.author })
-
       const currentUser = context.currentUser
 
       if (!currentUser) {
@@ -74,7 +73,7 @@ const resolvers = {
           if (e.name === 'ValidationError') {
             const validationErrors = getModelValidationErrors(e, 'Author')
 
-            throw new UserInputError('Couldn&quot;t create new author', {
+            throw new UserInputError('Could not create a new author!', {
               invalidArgs: { author: args.author },
               errorMessages: validationErrors,
             })
@@ -88,12 +87,11 @@ const resolvers = {
 
       try {
         await book.save()
-
       } catch (e) {
         if (e.name === 'ValidationError') {
           const validationErrors = getModelValidationErrors(e, 'Book')
 
-          throw new UserInputError('Could not create a new book', {
+          throw new UserInputError('Could not create a new book!', {
             invalidArgs: args,
             errorMessages: validationErrors,
           })
@@ -134,6 +132,7 @@ const resolvers = {
     },
     createUser: async (root, args) => {
       const user = new User({ ...args })
+
       try {
         await user.save()
       } catch (error) {
@@ -141,6 +140,7 @@ const resolvers = {
           invalidArgs: args,
         })
       }
+
       return user
     },
     login: async (root, args) => {

@@ -1,7 +1,7 @@
 {
   "name": "library",
   "version": "1.0.0",
-  "description": "simple library backend with graphQL",
+  "description": "Simple library backend with graphQL",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",

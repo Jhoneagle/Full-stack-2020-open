@@ -5,7 +5,7 @@ import { useUIDSeed, uid } from 'react-uid'
 import { useForm } from 'react-hook-form'
 import { Row, Col, Form, InputGroup, Button, Spinner } from 'react-bootstrap'
 
-import { CREATE_BOOK, ALL_BOOKS, ALL_AUTHORS, BOOK_ADDED } from '../graphql/queries'
+import { CREATE_BOOK, ALL_AUTHORS, ALL_BOOKS, BOOK_ADDED } from '../graphql/queries'
 import { resolveApolloErrors } from '../utils/errorHelper'
 import useAuthUser from '../hooks/useAuthUser'
 import useNotification from '../hooks/useNotification'
@@ -16,6 +16,7 @@ const NewBook = () => {
   const { user, hasSyncAuth } = useAuthUser()
   const { pathname } = useLocation()
   const notificationHelper = useNotification()
+
   const {
     register,
     handleSubmit,
@@ -37,11 +38,13 @@ const NewBook = () => {
   const { touched, isSubmitting } = formState
 
   const [createBook, createBookResults] = useMutation(CREATE_BOOK, {
-    refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
+    refetchQueries: [
+      { query: ALL_AUTHORS },
+      { query: ALL_BOOKS }
+    ],
     onError: (error) => {
       const errorsToDisplay = resolveApolloErrors(error)
-
-      notificationHelper.addMultiple(errorsToDisplay, 'error', 5000)
+      notificationHelper.addMultiple(errorsToDisplay, 'error')
     },
   })
 
@@ -49,7 +52,7 @@ const NewBook = () => {
 
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: () => {
-      notificationHelper.add('There are new books', 'info')
+      notificationHelper.add('There are new books!', 'info')
     },
   })
 
@@ -82,7 +85,7 @@ const NewBook = () => {
       })
 
       if (gqlData) {
-        notificationHelper.add('Succesfully created Book', 'success')
+        notificationHelper.add('Succesfully created Book!', 'success')
 
         setTimeout(() => {
           isAddingBook.current = false
@@ -138,6 +141,7 @@ const NewBook = () => {
               isValid={touched.title && !errors.title}
               isInvalid={errors.title}
             />
+
             <Form.Control.Feedback type='invalid'>
               {errors.title && errors.title.message}
             </Form.Control.Feedback>

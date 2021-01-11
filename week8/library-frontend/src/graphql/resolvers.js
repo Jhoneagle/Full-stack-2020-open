@@ -5,6 +5,7 @@ export const resolvers = {
   Query: {
     allNotifications: (root, args, { cache }) => {
       const { allNotifications } = cache.readQuery({ query: ALL_NOTIFICATIONS })
+
       return allNotifications
     },
   },

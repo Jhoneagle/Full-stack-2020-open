@@ -10,7 +10,7 @@ export const Modal = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(50, 50, 50, 0.95);
+  background-color: #323232;
   z-index: 9999;
 `
 

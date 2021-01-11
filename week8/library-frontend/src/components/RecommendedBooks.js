@@ -6,7 +6,7 @@ import { Row, Col, Spinner } from 'react-bootstrap'
 import { ALL_BOOKS } from '../graphql/queries'
 import useAuthUser from '../hooks/useAuthUser'
 import BooksTable from './BooksTable'
-import NoResource from './NoResource'
+import NoBooks from './NoBooks'
 
 const RecommendedBooks = () => {
   const [books, setBooks] = useState([])
@@ -16,10 +16,8 @@ const RecommendedBooks = () => {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    const { called, networkStatus, data } = getAllBooks
-
-    if (called && networkStatus > 6) {
-      const newBooks = data ? data.allBooks : books
+    if (!getAllBooks.loading) {
+      const newBooks = getAllBooks.data ? getAllBooks.data.allBooks : books
 
       setHasNoBooks(books.length === 0)
       setBooks(newBooks)
@@ -59,7 +57,7 @@ const RecommendedBooks = () => {
 
           <hr />
 
-          {hasNoBooks && <NoResource resource='books' />}
+          {hasNoBooks && <NoBooks />}
 
           <p className='lead'>
             In your favorite genre:

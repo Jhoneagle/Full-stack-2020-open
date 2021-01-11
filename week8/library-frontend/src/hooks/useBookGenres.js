@@ -17,10 +17,8 @@ const useBookGenres = () => {
   const getAllBooks = useQuery(ALL_BOOKS)
 
   useEffect(() => {
-    const { called, networkStatus, data } = getAllBooks
-
-    if (called && networkStatus > 6) {
-      const newBooks = data ? data.allBooks : books
+    if (!getAllBooks.loading) {
+      const newBooks = getAllBooks.data ? getAllBooks.data.allBooks : books
       const genres = newBooks.reduce(toGenres, [])
 
       setGenresState({ genres, hasGenres: true })
