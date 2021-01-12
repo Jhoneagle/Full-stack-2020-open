@@ -34,8 +34,12 @@ const Books = () => {
     },
   })
 
+  /*
+  Commented function call can be used when cache updates regarding
+  graphql queries that have variables, like genre in this case, work.
+  */
   useEffect(() => {
-    getAllBooks() // { variables: { genre } }
+    getAllBooks() // getAllBooks({ variables: { genre } })
   }, [genre, getAllBooks])
 
   useEffect(() => {
@@ -47,6 +51,10 @@ const Books = () => {
     }
   }, [getAllBooksResults])
 
+  /*
+  booksToShow variable part can be removed when qraphql queries
+  are used to filter books by genre.
+  */
   let booksToShow = books
 
   if (genre) {
