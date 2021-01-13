@@ -24,11 +24,9 @@ const addPatient = (patient: NewPatient): Patient => {
   return newPatient;
 };
 
-const addEntry = (patient: Patient, newEntry: NewEntry): Patient => {
-  const entry: Entry = { ...newEntry, id: uuid() };
-  const savedPatient = { ...patient };
-
-  savedPatient.entries.push(entry);
+const addEntry = (patient: Patient, entryToAdd: NewEntry): Patient => {
+  const entry: Entry = { ...entryToAdd, id: uuid() } as Entry;
+  const savedPatient = { ...patient, entries: patient.entries.concat(entry) };
 
   patients = patients.map((p) =>
     p.id === savedPatient.id ? savedPatient : p

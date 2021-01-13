@@ -67,7 +67,7 @@ export type NewBaseEntry = Omit<BaseEntry, "id">;
 
 export type NewEntry =
   | Omit<HospitalEntry, "id">
-  | Omit<OccupationalHealthcareEntry, "id">
+  | Omit<OccupationalHealthCareEntry, "id">
   | Omit<HealthCheckEntry, "id">;
 
 export interface Patient {
@@ -80,6 +80,6 @@ export interface Patient {
   entries: Entry[];
 }
 
-export type NewPatient = Omit<Patient, "id" | "entries">;
+export type NewPatient = Omit<Patient, "id">;
 
 export type NonSensitivePatient = Omit<Patient, "ssn" | "entries">;

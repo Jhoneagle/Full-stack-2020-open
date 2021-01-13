@@ -6,6 +6,7 @@ import {
   Diagnosis,
   NewPatient,
   Gender,
+  Entry,
   EntryType,
   HealthCheckRating,
   SickLeave,
@@ -36,6 +37,14 @@ const isHealthCheckRating = (param: any): param is HealthCheckRating => {
   return Object.values(HealthCheckRating).includes(param);
 };
 
+const isEntryType = (entry: any): entry is Entry => {
+  const healthCheck: boolean = entry.type === EntryType.HealthCheck;
+  const occupationalHealthcare: boolean = entry.type === EntryType.OccupationalHealthCare;
+  const hospital: boolean = entry.type === EntryType.Hospital;
+
+  return healthCheck || occupationalHealthcare || hospital;
+};
+
 export const parseString = (param: any, paramName: string): string => {
   if (!param || !isString(param)) {
     throw new Error(`Incorrect or missing ${paramName}`);
@@ -52,9 +61,9 @@ const parseGender = (gender: any): Gender => {
   return gender.toLowerCase() as Gender;
 };
 
-const parseDate = (date: any): string => {
+const parseDate = (date: any, paramName: string): string => {
   if (!date || !isString(date) || !isDate(date)) {
-    throw new Error("Incorrect or missing date");
+    throw new Error(`Incorrect or missing ${paramName}`);
   }
 
   return date;
@@ -92,11 +101,11 @@ const parseEntries = (entries: any): Entry[] => {
     throw new Error("Incorrect or missing entries");
   }
 
-  return entries;
+  return entries as Entry[];
 };
 
-const parseDischarge = (object: any): Discharge => {
-  if (!object) {
+const parseDischarge = (discharge: any): Discharge => {
+  if (!discharge) {
     throw new Error("Missing discharge");
   } else {
     if (!discharge.date) {
@@ -108,8 +117,8 @@ const parseDischarge = (object: any): Discharge => {
     }
 
     return {
-      date: parseDate(object.date, "discharge date"),
-      criteria: parseString(object.criteria, "discharge criteria"),
+      date: parseDate(discharge.date, "discharge date"),
+      criteria: parseString(discharge.criteria, "discharge criteria"),
     };
   }
 };
@@ -127,7 +136,7 @@ const parseDiagnosisCodes = (diagnosisCodes: any): Array<Diagnosis["code"]> => {
     return diagnosisCodes;
   }
 
-  if (!Array.isArray(diagnosisCode)) {
+  if (!Array.isArray(diagnosisCodes)) {
     throw new Error("Incorrect diagnosisCodes");
   }
 
