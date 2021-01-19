@@ -4,27 +4,47 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
 
 import { apiBaseUrl } from "./constants";
-import { useStateValue } from "./state";
-import { Patient } from "./types";
+import { useStateValue, setPatientList, setDiagnosesList } from "./state";
+import { Patient, Diagnosis } from "./types";
 
 import PatientListPage from "./PatientListPage";
+import PatientDetailPage from "./PatientPage";
 
 const App: React.FC = () => {
   const [, dispatch] = useStateValue();
-  React.useEffect(() => {
-    void axios.get(`${apiBaseUrl}/ping`);
 
-    const fetchPatientList = async () => {
+  React.useEffect(() => {
+    void axios.get<void>(`${apiBaseUrl}/ping`);
+
+    const getPatientList = async () => {
       try {
         const { data: patientListFromApi } = await axios.get<Patient[]>(
           `${apiBaseUrl}/patients`
         );
-        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+
+        dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
       }
     };
-    void fetchPatientList();
+
+    void getPatientList();
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    const getDiagnoses = async () => {
+      try {
+        const { data: diagnosesFromApi } = await axios.get<Diagnosis[]>(
+          `${apiBaseUrl}/diagnoses/`
+        );
+
+        dispatch(setDiagnosesList(diagnosesFromApi));
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    void getDiagnoses();
   }, [dispatch]);
 
   return (
@@ -37,7 +57,12 @@ const App: React.FC = () => {
           </Button>
           <Divider hidden />
           <Switch>
-            <Route path="/" render={() => <PatientListPage />} />
+            <Route path="/" exact>
+              <PatientListPage />
+            </Route>
+            <Route path="/patients/:id">
+              <PatientDetailPage />
+            </Route>
           </Switch>
         </Container>
       </Router>
