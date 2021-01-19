@@ -18,7 +18,7 @@ const HospitalEntry: React.FC<{ entry: Hospital }> = ({ entry }) => {
         <Card.Description>{entry.description}</Card.Description>
 
         {entry.diagnosisCodes && (
-          <DiagnosisList diagnosesCodes={entry.diagnosisCodes} />
+          <DiagnosisList diagnosisCodes={entry.diagnosisCodes} />
         )}
       </Card.Content>
 

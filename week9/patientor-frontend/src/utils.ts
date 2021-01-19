@@ -3,8 +3,7 @@ import {
   Gender,
   Entry,
   EntryType,
-  Patient,
-  HealthCheckRating
+  Patient
 } from "./types";
 
 export const assertNever = (value: never): never => {
@@ -23,42 +22,6 @@ const isDate = (date: string): boolean => {
 
 const isGender = (param: any): param is Gender => {
   return Object.values(Gender).includes(param);
-};
-
-export const isHealthCheckEntry = (values: any): values is HealthCheckEntry => {
-  return (
-    values.healthCheckRating === HealthCheckRating.LowRisk ||
-    values.healthCheckRating === HealthCheckRating.Healthy ||
-    values.healthCheckRating === HealthCheckRating.HighRisk ||
-    values.healthCheckRating === HealthCheckRating.CriticalRisk
-  );
-};
-
-export const isValidDate = (date: any): boolean => {
-  const regEx = /^\d{4}-\d{2}-\d{2}$/;
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  if (!date.match(regEx)) {
-    return false; // Invalid format
-  }
-
-  const d = new Date(date);
-  const dNum = d.getTime();
-
-  if (!dNum && dNum !== 0) {
-    return false; // NaN value, Invalid date
-  }
-
-  return d.toISOString().startsWith(date);
-};
-
-export const isValidHealthCeckValue = (value: any): boolean => {
-  return (
-    value === HealthCheckRating.Healthy ||
-    value === HealthCheckRating.LowRisk ||
-    value === HealthCheckRating.HighRisk ||
-    value === HealthCheckRating.CriticalRisk
-  );
 };
 
 const isArrayOfEntries = (param: any[]): param is Entry[] => {
@@ -107,6 +70,7 @@ const parseEntries = (entries: any): Entry[] => {
   return entries;
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const toPatient = (object: any): Patient => {
   return {
     name: parseToString(object.name, "name"),

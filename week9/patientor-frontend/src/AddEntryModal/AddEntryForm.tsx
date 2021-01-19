@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { Field, Formik, Form } from "formik";
 
 import { useStateValue } from "../state";
-import { NewEntry, EntryType } from "../types";
+import { NewEntry } from "../types";
 
 import { TextField, DiagnosisSelection } from "../components/FormField";
 import EntryTypeFields from "./EntryTypeFields";
@@ -61,7 +61,7 @@ const AddEntryForm: React.FC<EntryFormProps> = ({
               diagnoses={Object.values(diagnoses)}
             />
 
-            <EntryTypeFields entryType={values.type as EntryType} />
+            <EntryTypeFields entryType={values.type} />
 
             <Grid>
               <Grid.Column floated="left" width={5}>

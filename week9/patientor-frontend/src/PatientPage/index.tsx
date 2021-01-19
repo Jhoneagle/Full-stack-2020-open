@@ -12,9 +12,9 @@ import AddEntryModal from "../AddEntryModal";
 import EntryDetails from "./EntryDetails";
 
 const genderIconProps = {
-  male: { name: "mars", color: "blue" },
-  female: { name: "venus", color: "pink" },
-  other: { name: "genderless", color: "grey" },
+  male: { name: "mars" as const, color: "blue" as const },
+  female: { name: "venus" as const, color: "pink" as const },
+  other: { name: "genderless" as const, color: "grey" as const }
 };
 
 const PatientDetailPage: React.FC = () => {
@@ -62,12 +62,6 @@ const PatientDetailPage: React.FC = () => {
       }
     }
 
-    if (body.type === EntryType.HospitalCare) {
-      if (!body.discharge?.date && !body.sickLeave?.criteria) {
-        body.discharge = undefined;
-      }
-    }
-
     try {
       const { data: newEntry } = await axios.post<Patient>(
         `${apiBaseUrl}/patients/${id}/entries`,
@@ -77,6 +71,7 @@ const PatientDetailPage: React.FC = () => {
       dispatch(addEntry(newEntry));
       closeModal();
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       console.error(e?.response?.data);
       setError("Oops! Something went wrong!");
     }
@@ -108,10 +103,10 @@ const PatientDetailPage: React.FC = () => {
       />
       <Button onClick={openModal}>Add New Entry</Button>
 
-      {patient.entries?.length > 0 && <h2>Entries</h2>}
+      {patient.entries.length > 0 && <h2>Entries</h2>}
 
       <Card.Group>
-        {patient.entries?.map((entry: Entry) => (
+        {patient.entries.map((entry: Entry) => (
           <EntryDetails key={entry.id} entry={entry} />
         ))}
       </Card.Group>

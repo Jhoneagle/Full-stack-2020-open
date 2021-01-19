@@ -5,11 +5,11 @@ import { Header } from "semantic-ui-react";
 import { EntryType } from "../types";
 import { NumberField, TextField } from "../components/FormField";
 
-interface Props {
+interface EntryTypeProps {
   entryType: EntryType;
 }
 
-const EntryTypeFields: React.FC<Props> = ({ entryType }) => {
+const EntryTypeFields: React.FC<EntryTypeProps> = ({ entryType }) => {
   switch (entryType) {
     case EntryType.HealthCheck:
       return (

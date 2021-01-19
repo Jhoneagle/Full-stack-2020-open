@@ -20,7 +20,7 @@ const OccupationalHealthCareEntry: React.FC<{
         <Card.Description>{entry.description}</Card.Description>
 
         {entry.diagnosisCodes && (
-          <DiagnosisList diagnosesCodes={entry.diagnosisCodes} />
+          <DiagnosisList diagnosisCodes={entry.diagnosisCodes} />
         )}
 
         <List>

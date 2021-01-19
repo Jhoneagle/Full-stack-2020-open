@@ -21,16 +21,22 @@ const DiagnosisList: React.FC<DiagnosisListProps> = ({ diagnosisCodes }) => {
         </List.Header>
       </List.Item>
 
-      {diagnosisCodes.map((code) => (
-        <List.Item key={uid({})}>
-          <List.Content>
-            <List.Description>
-              <strong>{code} - </strong>
-              {diagnoses[code] && diagnoses[code].name}
-            </List.Description>
-          </List.Content>
-        </List.Item>
-      ))}
+      {diagnosisCodes.map((code) => {
+        const diagnosis = diagnoses?.filter(
+          (diagnosis) => diagnosis.code === code
+        );
+
+        return (
+          <List.Item key={uid({})}>
+            <List.Content>
+              <List.Description>
+                <strong>{code} - </strong>
+                {diagnosis?.length > 0 && diagnosis[0].name}
+              </List.Description>
+            </List.Content>
+          </List.Item>
+        );
+      })}
     </List>
   );
 };

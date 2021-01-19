@@ -65,10 +65,8 @@ export type Entry =
 
 export type NewEntry =
   | Omit<HospitalEntry, "id">
-  | Omit<OccupationalHealthcareEntry, "id">
+  | Omit<OccupationalHealthCareEntry, "id">
   | Omit<HealthCheckEntry, "id">;
-
-export type NewBaseEntry = Omit<BaseEntry, "id">;
 
 export interface Patient {
   id: string;
@@ -77,8 +75,7 @@ export interface Patient {
   gender: Gender;
   ssn?: string;
   dateOfBirth?: string;
+  entries: Entry[];
 }
 
-export type NewPatient = Omit<Patient, 'id'>;
-
-export type PublicPatient = Omit<Patient, 'ssn' | 'entries'>;
+export type NewPatient = Omit<Patient, 'id' | "entries">;

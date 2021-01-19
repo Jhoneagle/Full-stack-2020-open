@@ -2,54 +2,22 @@ import React from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 
-import { TextField, SelectField, GenderOption } from "../components/FormField";
-import { Gender, Patient } from "../types";
+import { TextField, SelectField } from "../components/FormField";
+import { NewPatient } from "../types";
+import { genderOptions, patientInitialValues } from "../utils/formHelpers";
+import { patientSchema } from "../utils/validations";
 
-/*
- * use type Patient, but omit id and entries,
- * because those are irrelevant for new patient object.
- */
-export type PatientFormValues = Omit<Patient, "id" | "entries">;
-
-interface Props {
-  onSubmit: (values: PatientFormValues) => void;
+interface PatientFormProps {
+  onSubmit: (values: NewPatient) => void;
   onCancel: () => void;
 }
 
-const genderOptions: GenderOption[] = [
-  { value: Gender.Male, label: "Male" },
-  { value: Gender.Female, label: "Female" },
-  { value: Gender.Other, label: "Other" }
-];
-
-const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
+const AddPatientForm: React.FC<PatientFormProps> = ({ onSubmit, onCancel }) => {
   return (
     <Formik
-      initialValues={{
-        name: "",
-        ssn: "",
-        dateOfBirth: "",
-        occupation: "",
-        gender: Gender.Other
-      }}
+      initialValues={patientInitialValues}
+      validationSchema={patientSchema}
       onSubmit={onSubmit}
-      validate={values => {
-        const requiredError = "Field is required";
-        const errors: { [field: string]: string } = {};
-        if (!values.name) {
-          errors.name = requiredError;
-        }
-        if (!values.ssn) {
-          errors.ssn = requiredError;
-        }
-        if (!values.dateOfBirth) {
-          errors.dateOfBirth = requiredError;
-        }
-        if (!values.occupation) {
-          errors.occupation = requiredError;
-        }
-        return errors;
-      }}
     >
       {({ isValid, dirty }) => {
         return (
@@ -60,29 +28,34 @@ const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
               name="name"
               component={TextField}
             />
+
             <Field
               label="Social Security Number"
               placeholder="SSN"
               name="ssn"
               component={TextField}
             />
+
             <Field
               label="Date Of Birth"
               placeholder="YYYY-MM-DD"
               name="dateOfBirth"
               component={TextField}
             />
+
             <Field
               label="Occupation"
               placeholder="Occupation"
               name="occupation"
               component={TextField}
             />
+
             <SelectField
               label="Gender"
               name="gender"
               options={genderOptions}
             />
+
             <Grid>
               <Grid.Column floated="left" width={5}>
                 <Button type="button" onClick={onCancel} color="red">
