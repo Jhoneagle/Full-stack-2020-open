@@ -1,5 +1,7 @@
 # Full Stack Open 2020
 
+[**Certificate**](http://johneagle.omat.fi/external/api/images/fullstack.html)
+
 This is a repository to contain my solutions for the exercises of the MOOC course called [Full stack open 2020](https://fullstackopen.com/). But as I have done it's [previous version](https://github.com/Jhoneagle/Full-stack-2018-open) before. I will only be expanding the course. Meaning there will be content only for the later parts of the course starting from part5.
 
 Those later parts include topics like Jest, Cypress, Redux, advanced hooking, application routing, CSS libraries, GraphQL, and Typescript.
