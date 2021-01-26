@@ -42,4 +42,9 @@ A disclaimer that this has been done only for learning purposes, so there are go
 - [Patientor backend](https://github.com/Jhoneagle/Full-stack-2020-open/tree/master/week9/patientor-backend)
 - [Patientor frontend](https://github.com/Jhoneagle/Full-stack-2020-open/tree/master/week9/patientor-frontend)
 
+## Part 10
+
+- [Course material](https://fullstackopen.com/en/part10)
+- [Rate Repository App](https://github.com/Jhoneagle/rate-repository-app)
+
 
