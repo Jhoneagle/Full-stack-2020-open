@@ -9,7 +9,7 @@
   "author": "Johneagle",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.19.0",
+    "apollo-server": "^2.25.3",
     "graphql": "^15.4.0",
     "nodemon": "^2.0.6"
   }
